@@ -1,0 +1,20 @@
+{
+  "name": "@pulse/website",
+  "version": "1.0.0",
+  "description": "Website using Pulse UI library",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/index.tsx --bundle --outfile=dist/index.js --jsx-factory=h --jsx-fragment=Fragment",
+    "dev": "esbuild src/index.tsx --bundle --outfile=dist/index.js --watch --jsx-factory=h --jsx-fragment=Fragment",
+    "start": "python3 -m http.server 8000 --directory dist"
+  },
+  "dependencies": {
+    "@pulse/core": "workspace:*"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  },
+  "author": "",
+  "license": "MIT"
+}

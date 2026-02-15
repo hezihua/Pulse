@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    .counter {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .count {
+      font-size: 3rem;
+      margin: 1rem 0;
+      color: #007bff;
+    }
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+    }
+    button:hover {
+      background-color: #0069d9;
+    }
+    .doubled {
+      font-size: 1.2rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  
+  <!-- 直接包含构建后的JavaScript文件 -->
+  <script src="./dist/index.js"></script>
+  
+  <script>
+    console.log('Testing Pulse...');
+    
+    // 使用全局变量而不是ES模块
+    const { createSignal, computed, render, h } = window;
+    
+    function Counter() {
+      const [count, setCount] = createSignal(0);
+      const doubled = computed(() => count() * 2);
+      
+      console.log('Counter created, initial count:', count());
+      
+      function increment() {
+        console.log('increment called');
+        const current = count();
+        console.log('current count:', current);
+        setCount(current + 1);
+        console.log('new count:', count());
+      }
+      
+      function decrement() {
+        console.log('decrement called');
+        const current = count();
+        console.log('current count:', current);
+        setCount(current - 1);
+        console.log('new count:', count());
+      }
+      
+      function reset() {
+        console.log('reset called');
+        setCount(0);
+        console.log('new count:', count());
+      }
+      
+      // 测试effect是否正常工作
+      const { effect } = window;
+      effect(() => {
+        console.log('Effect ran, count:', count());
+      });
+      
+      return h('div', { className: 'counter' },
+        h('h1', null, 'Pulse Counter'),
+        h('div', { className: 'count' }, count()),
+        h('div', { className: 'buttons' },
+          h('button', { onClick: decrement }, '-'),
+          h('button', { onClick: reset }, 'Reset'),
+          h('button', { onClick: increment }, '+')
+        ),
+        h('div', { className: 'doubled' }, 'Doubled: ', doubled())
+      );
+    }
+    
+    render(Counter, '#app');
+    console.log('Render called');
+  </script>
+</body>
+</html>

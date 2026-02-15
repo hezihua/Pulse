@@ -1,0 +1,36 @@
+{
+  "name": "@pulse/core",
+  "version": "1.0.0",
+  "description": "A SolidJS-like UI framework with Signals and no virtual DOM",
+  "main": "dist/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --format=esm --jsx-factory=h --jsx-fragment=Fragment",
+    "build:min": "esbuild src/index.ts --bundle --outfile=dist/index.min.js --minify --format=esm --jsx-factory=h --jsx-fragment=Fragment",
+    "dev": "esbuild src/index.ts --bundle --outfile=dist/index.js --watch --format=esm --jsx-factory=h --jsx-fragment=Fragment",
+    "test": "tsx test/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "ui",
+    "framework",
+    "signals",
+    "reactive",
+    "no-virtual-dom"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.0",
+    "tsx": "^4.19.0"
+  }
+}
